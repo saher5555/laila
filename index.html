@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Love Page ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: white;
+    overflow: hidden;
+}
+
+.page {
+    display: none;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.active {
+    display: flex;
+}
+
+h1 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: #ff4b5c;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 2;
+}
+
+button:hover {
+    background: #ff4b5c;
+    color: white;
+}
+
+img {
+    width: 250px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+/* القلوب */
+.heart {
+    position: absolute;
+    top: -50px;
+    font-size: 24px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+/* نص الشعر */
+#poem {
+    font-size: 1.6em;
+    line-height: 2;
+    white-space: pre-line;
+    z-index: 2;
+}
+</style>
+</head>
+
+<body>
+
+<!-- الصفحة الأولى -->
+<div id="page1" class="page active">
+    <h1>my lovely laila ❤️</h1>
+    <h1>في حاجة حابب أقولها لك ❤️</h1>
+    <button onclick="goToPage2()">اضغط هنا</button>
+</div>
+
+<!-- الصفحة الثانية -->
+<div id="page2" class="page">
+    <img src="https://picsum.photos/300" alt="romantic">
+    <div id="poem"></div>
+</div>
+
+<script>
+
+// النص
+const text = `وَمَا العِيدُ إِلَّا رَبِيعٌ أَنْتِ زَهْرَتُهُ 🌸
+وَأَنْتِ فِيهِ النَّسِيمُ وَالنَّهْرُ وَالشَّجَرُ 🍃
+
+وَمَا العِيدُ إِلَّا سَمَاءٌ أَنْتِ نَجْمَتُهَا ✨
+وَأَنْتِ فِيهِ الهِلَالُ وَالغَيْمُ وَالمَطَرُ 🌙☁️🌧️`;
+
+let index = 0;
+
+function typeWriter() {
+    if (index < text.length) {
+        document.getElementById("poem").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 50); // سرعة الكتابة
+    }
+}
+
+function goToPage2() {
+    document.getElementById("page1").classList.remove("active");
+    document.getElementById("page2").classList.add("active");
+
+    startHearts();
+    typeWriter(); // تشغيل الكتابة
+}
+
+// القلوب
+function createHeart() {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+    heart.style.fontSize = (20 + Math.random() * 25) + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}
+
+function startHearts() {
+    for (let i = 0; i < 50; i++) {
+        setTimeout(createHeart, i * 100);
+    }
+    setInterval(createHeart, 200);
+}
+
+</script>
+
+</body>
+</html>
